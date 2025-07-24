@@ -17,6 +17,10 @@
         button {
             padding: 10px 20px;
         }
+        #linkDisplay {
+            margin-top: 20px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -25,33 +29,30 @@
     <input type="text" id="serialNumberInput" placeholder="Serial Number">
     <button onclick="downloadFile()">Download</button>
     
+    <p id="linkDisplay"></p>
+
     <script>
         function downloadFile() {
-            // Get the serial number from the input field
             const serialNumber = document.getElementById('serialNumberInput').value;
             
-            // Check if the serial number has at least 5 characters
             if (serialNumber.length < 5) {
                 alert('Please enter a serial number with at least 5 characters.');
                 return;
             }
             
-            // Get the last 5 characters of the serial number
             const lastFiveChars = serialNumber.slice(-5);
-            
-            // Construct the URL with the last 5 characters
             const url = `http://www.procentec.com/_licenses/loadit2.php3?filename=ProfiCoreUltra2_${lastFiveChars}.pld`;
-            
-            // Create a temporary anchor element to trigger the download
+
+            // Show the download link
+            const linkDisplay = document.getElementById('linkDisplay');
+            linkDisplay.innerHTML = `Download link: <a href="${url}" target="_blank">${url}</a>`;
+
+            // Create a temporary anchor to trigger the download
             const link = document.createElement('a');
             link.href = url;
             link.download = `ProfiCoreUltra2_${lastFiveChars}.pld`;
-            
-            // Append the link to the body and click it to start the download
             document.body.appendChild(link);
             link.click();
-            
-            // Remove the link from the body
             document.body.removeChild(link);
         }
     </script>
